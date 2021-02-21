@@ -4,8 +4,6 @@ import ISendData from '../../interface/senddata.interface'
 import IJobs from '../../interface/jobs.interface'
 import Job from '../../dtos/job-create-dto'
 
-
-
 class JobsRepository implements IJobsRepository {
     private jobs: IJobs[] = []
     public async find(): Promise<IJobs[] | undefined> {

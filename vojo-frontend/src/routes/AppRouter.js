@@ -1,22 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Homepage from "../views/Homepage";
+import EditJob from '../views/EditJob';
 import Login from "../views/Login";
-
-import { AuthContext } from "../contexts/AuthContext";
+import PrivateRoute from './PrivateRoute';
 
 export default function AppRouter() {
-  const { authData } = useContext(AuthContext);
-
   return (
     <Router>
       <Switch>
-        {authData.logged ? (
-          <Route exact path="/" component={Homepage} />
-        ) : (
-            <Route exact path="/" component={Login} />
-          )}
+        <Route exact path="/" component={Homepage} />
+        <Route exact path="/login" component={Login} />
+        <PrivateRoute path="/edit/:id" component={EditJob} />
       </Switch>
     </Router>
   );

@@ -136,6 +136,11 @@ class Login extends Component {
   }
 
   loginSet = async (data, { setAuthData }) => {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const action = urlParams.get('action');
+    const subject = urlParams.get('subject');
+
     try {
       const response = await fetch(`${process.env.REACT_APP_API}/v3/auth/login`, {
         method: "POST",
@@ -159,6 +164,12 @@ class Login extends Component {
         logged: !response.error,
         accessToken
       }));
+
+      if (action && ['edit'].includes(action)) {
+        this.props.history.push(`${action}/${subject}`, this.props.location.state);
+      } else {
+        this.props.history.replace('/');
+      }
     } catch (error) {
       console.error(error);
     }

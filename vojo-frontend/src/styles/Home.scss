@@ -1,7 +1,3 @@
-.jobs-container {
-  max-width: 1200px;
-}
-
 .jobs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -58,4 +54,17 @@
 
 .job-footer {
   margin: 24px;
+}
+
+.job-form {
+  margin-bottom: 48px;
+}
+
+.job-form-subtitle,
+.checkbox-group {
+  margin-left: 15px;
+}
+
+.Input {
+  margin: 12px;
 }

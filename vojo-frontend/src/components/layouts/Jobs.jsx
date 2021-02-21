@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-
+import { useHistory } from "react-router-dom";
 import { Typography, Button, themes } from "@mindlab-vojo/component-library";
 
 import { AuthContext } from "../../contexts/AuthContext";
@@ -15,14 +15,14 @@ const Jobs = () => {
     const { authData } = useContext(AuthContext);
     const { setShow } = useContext(ModalContext);
 
+    const history = useHistory();
+
     useEffect(() => {
         const fetchJobs = async () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_API}/v3/jobs`);
 
                 const data = await response.json();
-
-                console.log(data);
 
                 setJobs(data);
             } catch (error) {
@@ -38,7 +38,17 @@ const Jobs = () => {
         setShow(true);
     };
 
-    const handleEditJob = () => { };
+    const handleEditJob = () => {
+        if (!authData.logged) {
+            history.push({
+                pathname: "/login",
+                search: `?action=edit&subject=${selectedJob._id}`,
+                state: selectedJob
+            });
+        } else {
+            history.push(`/edit/${selectedJob._id}`, selectedJob);
+        }
+    };
 
     return (
         <>
@@ -53,9 +63,6 @@ const Jobs = () => {
                         <div className="job-header">
                             <h2 className="job-title">{job.title}</h2>
                         </div>
-                        {/* <div className="job-info">
-                <p>{job.information}</p>
-            </div> */}
                     </Card>
                 ))}
             </div>
@@ -79,15 +86,6 @@ const Jobs = () => {
                         </div>
 
                         <div className="job-info">
-                            {/* <p>
-                  {selectedJob.description?.map((d) => (
-                      <>
-                          {d}
-                          <br />
-                      </>
-                  ))}
-              </p> */}
-
                             <p>
                                 <span className="job-label">Sobre a vaga</span>
                                 <br />

@@ -26,7 +26,7 @@ const Homepage = () => {
         <Header />
       </Container>
 
-      <div className="jobs-container Login__Container">
+      <div className="container Login__Container">
         <div>
           <Typography
             tag="h1"
