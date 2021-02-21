@@ -2,7 +2,7 @@ import { Document } from 'mongoose'
 import { ILocation } from './location.interface'
 import { ICompensation } from './compensation.interface'
 
-export default interface IJobs extends Document {
+export interface IJobs extends Document {
   _id: string
   compensation: ICompensation
   active: boolean

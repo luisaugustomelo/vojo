@@ -1,7 +1,7 @@
 
 import { ICompensation } from '../interface/compensation.interface'
 import { ILocation } from '../interface/location.interface'
-import IJob from '../interface/jobs.interface'
+import { IJobs } from '../interface/jobs.interface'
 
 export default class CreateJobDto {
     readonly id: string

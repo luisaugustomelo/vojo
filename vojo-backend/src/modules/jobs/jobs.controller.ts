@@ -4,7 +4,7 @@ import { Response } from 'express';
 
 import { JobsService } from './jobs.service'
 // import UpdateJobDto from './dtos/job-update.dto'
-import IJob from './interface/jobs.interface'
+import { IJobs } from './interface/jobs.interface'
 
 @Controller('v3/jobs')
 export class JobsController {
@@ -18,7 +18,7 @@ export class JobsController {
 
   @Put(':id')
   @UseGuards(AuthGuard())
-  async updateJob(@Body() jobData: IJob, @Param() { id }): Promise<object> {
+  async updateJob(@Body() jobData: IJobs, @Param() { id }): Promise<object> {
     const job = await this.jobsService.update(id, jobData)
 
   return { data: null }

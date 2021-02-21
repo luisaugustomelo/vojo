@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport'
 import { JobsController } from './jobs.controller'
 import { JobsService } from './jobs.service'
 import { JobSchema } from './infra/entities/schemas/jobs.schema'
+import { JobsRepository } from './infra/entities/repositories/JobsRepository'
 
 @Module({
     imports: [
@@ -19,7 +20,7 @@ import { JobSchema } from './infra/entities/schemas/jobs.schema'
       MongooseModule.forFeature([{ name: 'Jobs', schema: JobSchema, collection: 'jobs' }])
     ],
     controllers: [JobsController],
-    providers: [JobsService],
+    providers: [JobsService, JobsRepository],
     exports: [PassportModule]
   })
 
