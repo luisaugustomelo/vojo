@@ -27,10 +27,17 @@ export class JobsService {
      * Output: updatedStatus -> Obs: if job was updated nModified is 1, else 0
      */
     async update({ id, data, user }: ISendData): Promise<IUpdatedData> {
-        // pegar o id do usuário passado no token, para realizar o save no updatedBy
-        // verificar se existe o id antes de realizar o salvamento, com isso será possível casar em um throw
+        
+        const findJob = await this.jobsRepository.findOne(id)
+
+        if(!findJob) {
+            throw new Error('Não existe um job com o identificador especificado')
+        }
+
+        data.updatedBy = user.id
+
         const updatedJob = await this.jobsRepository.update({ id, data })
-        console.log(updatedJob)
+
         const { nModified } = updatedJob;
 
         if(!nModified) {
@@ -42,12 +49,20 @@ export class JobsService {
 
     /**
      * 
-     * @param data 
+     * @param IJobs
+     *  Input: IJobs
+     *  Output: IJobs ou undefined
      */
-    async create(data: IJobs): Promise<IJobs | undefined> {
-        //Verificar se há algo para verificar, antes da criação, exemplo: nome da vaga, compania, etc
-        // Adicionar o userId ao updatedBy e createdBy
-        const job = await this.jobsRepository.create(data)
+    async create({ data, user }: ISendData): Promise<IJobs | undefined> {
+        data.updatedBy = user.id
+        data.createdBy = user.id
+
+        const job = await this.jobsRepository.create(data as IJobs)
+
+        if(!job) {
+            throw new Error('Ocorreu um erro ao criar o job')
+        }
+
         return job
     }
 }

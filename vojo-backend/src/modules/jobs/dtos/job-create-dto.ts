@@ -3,7 +3,7 @@ import { ICompensation } from '../interface/compensation.interface'
 import { ILocation } from '../interface/location.interface'
 
 export class CreateJobDto {
-    readonly _id: string
+    readonly _id?: string
     
     readonly compensation: ICompensation
 
@@ -33,7 +33,7 @@ export class CreateJobDto {
 
     readonly isActive: boolean
 
-    readonly createdBy: string
+    createdBy: string
 
-    readonly updatedBy: string
+    updatedBy: string
 }

@@ -3,6 +3,7 @@ import { JobsService } from './jobs.service'
 import { IJobs } from './interface/jobs.interface'
 import { ISendData } from './interface/senddata.interface'
 import { mock } from './repositories/fakes/FakeJobsData'
+import { IUser } from '@/modules/users/interfaces/user.interface'
 
 describe('Jobs Service', () => {
     it('should to be able to get all jobs and check if is empty (has no data)', async () => {
@@ -19,7 +20,17 @@ describe('Jobs Service', () => {
         const jobsRepository = new FakeJobsRepository()
         const jobsService = new JobsService(jobsRepository)
 
-        await jobsService.create(mock as IJobs)
+        const data = mock as IJobs
+        const user = {
+            email: 'johndoe@example.com',
+            cellphone: '11123456789',
+            firstName: 'john',
+            lastName: 'doe',
+            password: '1234567',
+            isActive: true
+        } as IUser
+
+        await jobsService.create({ data, user })
 
         const jobs = await jobsService.showAll()
         expect(jobs.length).toBe(1)
@@ -30,7 +41,17 @@ describe('Jobs Service', () => {
         const jobsRepository = new FakeJobsRepository()
         const jobsService = new JobsService(jobsRepository)
 
-        const createJob = await jobsService.create(mock as IJobs)
+        const data = mock as IJobs
+        const user = {
+            email: 'johndoe@example.com',
+            cellphone: '11123456789',
+            firstName: 'john',
+            lastName: 'doe',
+            password: '1234567',
+            isActive: true
+        } as IUser
+
+        const createJob = await jobsService.create({ data, user })
         expect(createJob).toHaveProperty('active')
         expect(createJob).toHaveProperty('imageUrl')
         expect(createJob).toHaveProperty('createdBy')
@@ -42,7 +63,17 @@ describe('Jobs Service', () => {
         const jobsRepository = new FakeJobsRepository()
         const jobsService = new JobsService(jobsRepository)
 
-        expect(await jobsService.create(mock as IJobs)).toBeInstanceOf(Object)
+        const data = mock as IJobs
+        const user = {
+            email: 'johndoe@example.com',
+            cellphone: '11123456789',
+            firstName: 'john',
+            lastName: 'doe',
+            password: '1234567',
+            isActive: true
+        } as IUser
+
+        expect(await jobsService.create({ data, user } )).toBeInstanceOf(Object)
         
         const updateJob = await jobsService.update({ id: '5eb5c23e893c9e00211c0b93', data: { education: 'Ensino médio' } } as ISendData)
 

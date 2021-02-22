@@ -14,19 +14,22 @@ export class JobsRepository implements IJobsRepository {
 
     public async find(): Promise<Array<IJobs>> {
         const jobs = await this.repository.find().exec()
-
         return jobs
     }
 
+    public async findOne(id: string): Promise<IJobs | undefined> {
+        const job = await this.repository.findById(id)
+        return job
+    }
+
     public async update({ id, data}: ISendData): Promise<IUpdatedData> {
-        const updateJob = await this.repository.updateOne({_id: id}, { ...data });
+        const updateJob = await this.repository.updateOne({_id: id}, { ...data })
         return updateJob
 
     }
 
     public async create(data: IJobs): Promise<IJobs | undefined> {
-        const createJob = await this.repository.create({ ...data });
-
-        return createJob;
+        const createJob = await this.repository.create({ ...data })
+        return createJob
     }
 }
