@@ -21,6 +21,6 @@ export class JobsController {
   async updateJob(@Body() jobData: IJobs, @Param() { id }): Promise<object> {
     const job = await this.jobsService.update(id, jobData)
 
-  return { data: null }
+  return { job }
   }
 }

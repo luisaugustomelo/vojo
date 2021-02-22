@@ -17,13 +17,15 @@ export class JobsRepository implements IJobsRepository {
         return jobs
     }
 
-    public async update({ id, data}: ISendData): Promise<void> {
-        await this.repository.update({_id: id}, { data });
+    public async update({ id, data}: ISendData): Promise<IJobs | undefined> {
+        const updateJob = await this.repository.updateOne({_id: id}, { data });
+        return updateJob
+
     }
 
     public async create(data: IJobs): Promise<IJobs | undefined> {
-        const jobCreate = await this.repository.create({ ...data });
+        const createJob = await this.repository.create({ ...data });
 
-        return jobCreate;
+        return createJob;
     }
 }

@@ -15,8 +15,14 @@ export class JobsService {
         return jobs
     }
 
-    async update(id: string, data: IJobs): Promise<void> {
+    async update(id: string, data: IJobs): Promise<object> {
         delete data._id
-        await this.jobsRepository.update({ id, data})
+        const job = await this.jobsRepository.update({ id, data})
+        return job
+    }
+
+    async create(data: IJobs): Promise<IJobs | undefined> {
+        const job = await this.jobsRepository.create(data)
+        return job
     }
 }

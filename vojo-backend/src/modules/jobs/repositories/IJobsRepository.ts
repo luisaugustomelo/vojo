@@ -4,5 +4,5 @@ import ISendData from '../interface/senddata.interface';
 export interface IJobsRepository {
     find(): Promise<IJobs[] | undefined>;
     create(data: IJobs): Promise<IJobs | undefined>;
-    update(data: ISendData): Promise<void>;
+    update(data: ISendData): Promise<object>;
 }

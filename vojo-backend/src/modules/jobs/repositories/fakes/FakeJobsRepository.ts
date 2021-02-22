@@ -17,10 +17,12 @@ export class FakeJobsRepository implements IJobsRepository {
 
         return job
     }
-    public async update({ id, data }: ISendData): Promise<void> {
+    public async update({ id, data }: ISendData): Promise<IJobs> {
         const jobIndex = this.jobs.findIndex(job => job.id === id)
         
         this.jobs[jobIndex] = data as IJobs
+
+        return this.jobs[jobIndex]
     }
 }
 
