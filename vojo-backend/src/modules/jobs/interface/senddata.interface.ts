@@ -1,6 +1,6 @@
-import UpdateJobDto  from '../dtos/job-update.dto';
+import { CreateJobDto }  from '../dtos/job-create-dto';
 
-export default interface ISendData {
+export interface ISendData {
     id: string,
-    data: UpdateJobDto
+    data: Omit<CreateJobDto, '_id'>
 }

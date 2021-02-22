@@ -1,10 +1,9 @@
 
 import { ICompensation } from '../interface/compensation.interface'
 import { ILocation } from '../interface/location.interface'
-import { IJobs } from '../interface/jobs.interface'
 
-export default class CreateJobDto {
-    readonly id: string
+export class CreateJobDto {
+    readonly _id: string
     
     readonly compensation: ICompensation
 

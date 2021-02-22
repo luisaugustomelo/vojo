@@ -1,6 +1,7 @@
 import { FakeJobsRepository } from './repositories/fakes/FakeJobsRepository'
 import { JobsService } from './jobs.service'
 import { IJobs } from './interface/jobs.interface'
+import { ISendData } from './interface/senddata.interface'
 import { mock } from './repositories/fakes/FakeJobsData'
 
 describe('Jobs Service', () => {
@@ -43,7 +44,7 @@ describe('Jobs Service', () => {
 
         expect(await jobsService.create(mock as IJobs)).toBeInstanceOf(Object)
         
-        const updateJob = await jobsService.update('5eb5c23e893c9e00211c0b93', { education: 'Ensino médio' } as IJobs)
+        const updateJob = await jobsService.update({ id: '5eb5c23e893c9e00211c0b93', data: { education: 'Ensino médio' } } as ISendData)
 
         expect(updateJob).toBeInstanceOf(Object)
     })

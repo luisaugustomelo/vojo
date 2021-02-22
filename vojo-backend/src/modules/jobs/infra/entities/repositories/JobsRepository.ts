@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { IJobs } from '../../../interface/jobs.interface'
-import ISendData from '../../../interface/senddata.interface'
+import { ISendData } from '../../../interface/senddata.interface'
 import { IJobsRepository } from '../../../repositories/IJobsRepository'
+import { IUpdatedData } from '../../../interface/updated.data'
 
 @Injectable()
 export class JobsRepository implements IJobsRepository {
@@ -17,8 +18,8 @@ export class JobsRepository implements IJobsRepository {
         return jobs
     }
 
-    public async update({ id, data}: ISendData): Promise<IJobs | undefined> {
-        const updateJob = await this.repository.updateOne({_id: id}, { data });
+    public async update({ id, data}: ISendData): Promise<IUpdatedData> {
+        const updateJob = await this.repository.updateOne({_id: id}, { ...data });
         return updateJob
 
     }
