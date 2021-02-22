@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { Container, Header, Footer, Typography, themes } from "@mindlab-vojo/component-library";
+
+import { LoaderContext } from '../contexts/LoaderContext';
 
 import { JobForm } from '../components/layouts';
 
 import "../styles/Home.scss";
 
 const EditJob = () => {
+    const { setIsLoading } = useContext(LoaderContext);
+
     const location = useLocation();
     const history = useHistory();
 
     const data = location.state;
 
     const handleSubmit = async (values) => {
+        setIsLoading(true);
+
         const accessToken = sessionStorage.getItem("accessToken");
 
         try {
@@ -36,6 +42,8 @@ const EditJob = () => {
             }
         } catch (error) {
             toast.error("Não foi possível atualizar a vaga no momento.");
+        } finally {
+            setIsLoading(false);
         }
     };
 

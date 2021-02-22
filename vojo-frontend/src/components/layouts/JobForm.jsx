@@ -169,9 +169,13 @@ const JobForm = ({ data, onSubmit }) => {
                             isRequired
                             label="Vagas disponíveis"
                             name="totalSpots"
-                            value={values.totalSpots}
-                            onInputBlur={({ value }) => setFieldValue("totalSpots", value)}
-                            onInputChange={({ value }) => setFieldValue("totalSpots", value)}
+                            value={String(values.totalSpots)}
+                            onInputBlur={({ value }) =>
+                                setFieldValue("totalSpots", Number(value))
+                            }
+                            onInputChange={({ value }) =>
+                                setFieldValue("totalSpots", Number(value))
+                            }
                             placeholder="Vagas disponíveis"
                             errorMessage={errors.totalSpots}
                             showError={!!errors.totalSpots}
@@ -246,12 +250,12 @@ const JobForm = ({ data, onSubmit }) => {
                             isRequired
                             label="Valor"
                             name="compensation.amount"
-                            value={values.compensation?.amount}
+                            value={String(values.compensation?.amount)}
                             onInputBlur={({ value }) =>
-                                setFieldValue("compensation.amount", value)
+                                setFieldValue("compensation.amount", Number(value))
                             }
                             onInputChange={({ value }) =>
-                                setFieldValue("compensation.amount", value)
+                                setFieldValue("compensation.amount", Number(value))
                             }
                             placeholder="Valor"
                             errorMessage={errors.compensation?.amount}
