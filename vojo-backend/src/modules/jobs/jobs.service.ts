@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common'
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common'
 import { IJobs } from './interface/jobs.interface'
 import { IJobsRepository } from './repositories/repository.interface'
 import { ISendData } from './interface/senddata.interface'
@@ -11,26 +11,17 @@ export class JobsService {
         private jobsRepository: IJobsRepository,
     ){}
 
-    /**
-     * Input: nothing
-     * Output: Array with 0 or N elements
-     */
     async showAll(): Promise<Array<IJobs>> {
         const jobs = await this.jobsRepository.find()
 
         return jobs
     }
 
-    /**
-     * @param ISendData (structure: id: string; data: CreateJobDto; user: IUser)
-     * Input: ISendData
-     * Output: updatedStatus -> Obs: if job was updated nModified is 1, else 0
-     */
     async update({ id, data, user }: ISendData): Promise<IUpdatedData> {
         const findJob = await this.jobsRepository.findOne(id)
 
         if(!findJob) {
-            throw new Error('Não existe um job com o identificador especificado')
+            throw new HttpException('Não existe um job com o identificador especificado', HttpStatus.BAD_REQUEST)
         }
 
         data.updatedBy = user._id
@@ -40,18 +31,12 @@ export class JobsService {
         const { nModified } = updatedJob;
 
         if(!nModified) {
-            throw new Error('Não foi possível atualizar o job')
+            throw new HttpException('Não foi possível atualizar o job', HttpStatus.BAD_REQUEST)
         }
         
         return updatedJob
     }
 
-    /**
-     * 
-     * @param IJobs
-     *  Input: IJobs
-     *  Output: IJobs ou undefined
-     */
     async create({ data, user }: ISendData): Promise<IJobs | undefined> {
         data.updatedBy = user._id
         data.createdBy = user._id

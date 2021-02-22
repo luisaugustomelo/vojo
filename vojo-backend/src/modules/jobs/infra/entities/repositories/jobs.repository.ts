@@ -18,7 +18,7 @@ export class JobsRepository implements IJobsRepository {
     }
 
     public async findOne(id: string): Promise<IJobs | undefined> {
-        const job = await this.repository.findById(id)
+        const job = await this.repository.findOne({_id: id})
         return job
     }
 

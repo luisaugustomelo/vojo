@@ -4,8 +4,7 @@ import { ICompensation } from '../interface/compensation.interface'
 import { ILocation } from '../interface/location.interface'
 
 export class UpdateJobDto {
-    @IsNotEmpty()
-    @IsString()
+    
     readonly _id?: string
 
     readonly active ?: boolean

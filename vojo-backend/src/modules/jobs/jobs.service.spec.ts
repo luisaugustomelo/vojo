@@ -1,3 +1,4 @@
+import { HttpException } from '@nestjs/common'
 import { FakeJobsRepository } from './repositories/fakes/fake.jobs.repository'
 import { JobsService } from './jobs.service'
 import { IJobs } from './interface/jobs.interface'
@@ -76,10 +77,41 @@ describe('Jobs Service', () => {
             isActive: true
         } as IUser
 
-        expect(await jobsService.create({ data, user } )).toBeInstanceOf(Object)
-        
-        const updateJob = await jobsService.update({ id: '5eb5c23e893c9e00211c0b93', data: { education: 'Ensino médio' } } as ISendData)
+        expect(await jobsService.create({ data, user })).toBeInstanceOf(Object)
+
+        const updateJob = await jobsService.update({ id: '5eb5c23e893c9e00211c0b93', data: { education: 'Ensino médio' }, user } as ISendData)
 
         expect(updateJob).toBeInstanceOf(Object)
+    })
+
+    it('should not be able to find job to update', async () => {
+
+        const jobsRepository = new FakeJobsRepository()
+        const jobsService = new JobsService(jobsRepository)
+
+        const data = mock as IJobs
+        const user = {
+            _id: '5eb5c23e893c9e00211c0b93',
+            email: 'johndoe@example.com',
+            cellphone: '11123456789',
+            firstName: 'john',
+            lastName: 'doe',
+            password: '1234567',
+            isActive: true
+        } as IUser
+
+        expect(await jobsService.create({ data, user })).toBeInstanceOf(Object)
+
+        await expect(jobsService.update(
+            {
+                id: 'doesnt-exists-job',
+                data: { education: 'Ensino médio' }, user
+            } as ISendData)).rejects.toBeInstanceOf(HttpException)
+
+        await expect(jobsService.update(
+            {
+                id: 'doesnt-exists-job',
+                data: { education: 'Ensino médio' }, user
+            } as ISendData)).rejects.toThrowError('Não existe um job com o identificador especificado')
     })
 })
