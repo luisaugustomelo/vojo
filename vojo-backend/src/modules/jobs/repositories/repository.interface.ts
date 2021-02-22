@@ -1,4 +1,3 @@
-// import Job from '../dtos/job-create-dto';
 import { IJobs } from '../interface/jobs.interface'
 import { ISendData } from '../interface/senddata.interface';
 import { IUpdatedData } from '../interface/updated.data.interface'

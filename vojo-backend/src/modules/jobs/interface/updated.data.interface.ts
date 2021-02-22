@@ -1,4 +1,3 @@
-
 export interface IUpdatedData {
     n: number
     nModified: number
