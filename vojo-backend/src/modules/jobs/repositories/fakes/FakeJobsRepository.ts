@@ -12,7 +12,7 @@ export class FakeJobsRepository implements IJobsRepository {
     }
 
     public async findOne(id: string): Promise<IJobs | undefined> {
-        const findJob = this.jobs.find(job => job.id === id)
+        const findJob = this.jobs.find(job => job._id === id)
 
         return findJob
     }

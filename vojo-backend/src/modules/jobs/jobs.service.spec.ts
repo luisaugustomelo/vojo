@@ -22,6 +22,7 @@ describe('Jobs Service', () => {
 
         const data = mock as IJobs
         const user = {
+            _id: '5eb5c23e893c9e00211c0b93',
             email: 'johndoe@example.com',
             cellphone: '11123456789',
             firstName: 'john',
@@ -43,6 +44,7 @@ describe('Jobs Service', () => {
 
         const data = mock as IJobs
         const user = {
+            _id: '5eb5c23e893c9e00211c0b93',
             email: 'johndoe@example.com',
             cellphone: '11123456789',
             firstName: 'john',
@@ -65,6 +67,7 @@ describe('Jobs Service', () => {
 
         const data = mock as IJobs
         const user = {
+            _id: '5eb5c23e893c9e00211c0b93',
             email: 'johndoe@example.com',
             cellphone: '11123456789',
             firstName: 'john',

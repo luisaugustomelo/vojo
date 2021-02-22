@@ -1,39 +1,84 @@
 
+import { IsNotEmpty, IsObject, IsString, IsBoolean, IsArray, IsNumber, IsUrl, IsDecimal, IsOptional, IsPositive, IsNotEmptyObject, IsDateString } from 'class-validator'
 import { ICompensation } from '../interface/compensation.interface'
 import { ILocation } from '../interface/location.interface'
 
 export class CreateJobDto {
+    @IsNotEmpty()
+    @IsString()
     readonly _id?: string
     
+    @IsNotEmpty()
+    @IsObject()
+    @IsNotEmptyObject()
     readonly compensation: ICompensation
 
-    readonly active: boolean
+    @IsNotEmpty()
+    @IsBoolean()
+    readonly active?: boolean
 
-    readonly open: boolean
+    @IsNotEmpty()
+    @IsBoolean()
+    readonly open?: boolean
 
-    readonly assignments: Array<string>
+    @IsNotEmpty()
+    @IsArray()
+    readonly assignments?: Array<string>
 
+    @IsNotEmpty()
+    @IsString()
+    @IsDecimal()
+    @IsPositive()
     readonly totalSpots: number
 
+    @IsNotEmpty()
+    @IsString()
     readonly title: string
 
+    @IsNotEmpty()
+    @IsString()
     readonly information: string
 
+    @IsNotEmpty()
+    @IsObject()
+    @IsNotEmptyObject()
     readonly location: ILocation
 
+    @IsNotEmpty()
+    @IsString()
     readonly education: string
 
+    @IsNotEmpty()
+    @IsString()
     readonly company: string
 
-    readonly __v: number
+    @IsNotEmpty()
+    @IsNumber()
+    @IsDecimal()
+    @IsPositive()
+    @IsOptional()
+    readonly __v?: number
 
+    @IsNotEmpty()
+    @IsString()
+    @IsUrl()
     readonly imageUrl: string
 
-    readonly description: Array<string>
+    @IsNotEmpty()
+    @IsString()
+    readonly description?: Array<string>
 
-    readonly isActive: boolean
+    @IsNotEmpty()
+    @IsBoolean()
+    readonly isActive?: boolean
 
-    createdBy: string
+    @IsNotEmpty()
+    @IsString()
+    @IsDateString()
+    createdBy?: string
 
-    updatedBy: string
+    @IsNotEmpty()
+    @IsString()
+    @IsDateString()
+    updatedBy?: string
 }

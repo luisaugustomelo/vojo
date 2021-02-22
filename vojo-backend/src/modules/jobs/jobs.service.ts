@@ -27,14 +27,13 @@ export class JobsService {
      * Output: updatedStatus -> Obs: if job was updated nModified is 1, else 0
      */
     async update({ id, data, user }: ISendData): Promise<IUpdatedData> {
-        
         const findJob = await this.jobsRepository.findOne(id)
 
         if(!findJob) {
             throw new Error('Não existe um job com o identificador especificado')
         }
 
-        data.updatedBy = user.id
+        data.updatedBy = user._id
 
         const updatedJob = await this.jobsRepository.update({ id, data })
 
@@ -54,8 +53,8 @@ export class JobsService {
      *  Output: IJobs ou undefined
      */
     async create({ data, user }: ISendData): Promise<IJobs | undefined> {
-        data.updatedBy = user.id
-        data.createdBy = user.id
+        data.updatedBy = user._id
+        data.createdBy = user._id
 
         const job = await this.jobsRepository.create(data as IJobs)
 

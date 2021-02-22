@@ -22,7 +22,7 @@ export class JobsRepository implements IJobsRepository {
         return job
     }
 
-    public async update({ id, data}: ISendData): Promise<IUpdatedData> {
+    public async update({ id, data }: ISendData): Promise<IUpdatedData> {
         const updateJob = await this.repository.updateOne({_id: id}, { ...data })
         return updateJob
 
