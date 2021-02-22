@@ -1,5 +1,5 @@
 
-import { IsNotEmpty, IsBoolean, IsArray, IsDateString, IsObject, IsString, IsNumber, IsUrl, IsDecimal, IsOptional, IsPositive, IsNotEmptyObject } from 'class-validator'
+import { IsNotEmpty, IsBoolean, IsArray, IsObject, IsString, IsNumber, IsUrl, IsDecimal, IsOptional, IsPositive, IsNotEmptyObject } from 'class-validator'
 import { ICompensation } from '../interface/compensation.interface'
 import { ILocation } from '../interface/location.interface'
 
