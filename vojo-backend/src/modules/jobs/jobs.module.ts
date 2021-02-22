@@ -7,7 +7,7 @@ import { PassportModule } from '@nestjs/passport'
 import { JobsController } from './jobs.controller'
 import { JobsService } from './jobs.service'
 import { JobSchema } from './infra/entities/schemas/jobs.schema'
-import { JobsRepository } from './infra/entities/repositories/JobsRepository'
+import { JobsRepository } from './infra/entities/repositories/jobs.repository'
 
 @Module({
     imports: [

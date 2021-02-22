@@ -1,8 +1,8 @@
-import { FakeJobsRepository } from './repositories/fakes/FakeJobsRepository'
+import { FakeJobsRepository } from './repositories/fakes/fake.jobs.repository'
 import { JobsService } from './jobs.service'
 import { IJobs } from './interface/jobs.interface'
 import { ISendData } from './interface/senddata.interface'
-import { mock } from './repositories/fakes/FakeJobsData'
+import { mock } from './repositories/fakes/fake.jobs.data'
 import { IUser } from '@/modules/users/interfaces/user.interface'
 
 describe('Jobs Service', () => {

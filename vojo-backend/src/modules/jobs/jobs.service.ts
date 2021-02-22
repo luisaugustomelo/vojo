@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common'
 import { IJobs } from './interface/jobs.interface'
-import { IJobsRepository } from './repositories/IJobsRepository'
+import { IJobsRepository } from './repositories/repository.interface'
 import { ISendData } from './interface/senddata.interface'
-import { IUpdatedData } from './interface/updated.data'
+import { IUpdatedData } from './interface/updated.data.interface'
 
 @Injectable()
 export class JobsService {

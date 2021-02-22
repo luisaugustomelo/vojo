@@ -1,25 +1,21 @@
 
-import { IsNotEmpty, IsBoolean, IsArray, IsDateString, IsObject, IsString, IsNumber, IsUrl, IsDecimal, IsOptional, IsPositive, IsNotEmptyObject } from 'class-validator'
+import { IsNotEmpty, IsObject, IsString, IsNumber, IsUrl, IsDecimal, IsOptional, IsPositive, IsNotEmptyObject } from 'class-validator'
 import { ICompensation } from '../interface/compensation.interface'
 import { ILocation } from '../interface/location.interface'
 
-export class CreateJobDto {    
+export class UpdateJobDto {
+    @IsNotEmpty()
+    @IsString()
+    readonly _id?: string
+
+    readonly active ?: boolean
+
+    readonly open ?: boolean
+
     @IsNotEmpty()
     @IsObject()
     @IsNotEmptyObject()
     readonly compensation: ICompensation
-
-    @IsNotEmpty()
-    @IsBoolean()
-    readonly active?: boolean
-
-    @IsNotEmpty()
-    @IsBoolean()
-    readonly open?: boolean
-
-    @IsNotEmpty()
-    @IsArray()
-    readonly assignments?: Array<string>
 
     @IsNotEmpty()
     @IsNumber()
@@ -33,6 +29,10 @@ export class CreateJobDto {
     @IsNotEmpty()
     @IsString()
     readonly information: string
+
+    readonly assignments ?: Array < string >
+
+    readonly description ?: Array < string >
 
     @IsNotEmpty()
     @IsObject()
@@ -54,20 +54,14 @@ export class CreateJobDto {
     @IsOptional()
     readonly __v?: number
 
+    readonly isActive ?: boolean
+
     @IsNotEmpty()
     @IsString()
     @IsUrl()
     readonly imageUrl: string
 
-    @IsNotEmpty()
-    @IsString()
-    readonly description?: Array<string>
+    createdBy ?: string
 
-    @IsNotEmpty()
-    @IsBoolean()
-    readonly isActive?: boolean
-
-    createdBy?: string
-
-    updatedBy?: string
+    updatedBy ?: string
 }

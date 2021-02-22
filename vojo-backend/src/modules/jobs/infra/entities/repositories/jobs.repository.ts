@@ -3,8 +3,8 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { IJobs } from '../../../interface/jobs.interface'
 import { ISendData } from '../../../interface/senddata.interface'
-import { IJobsRepository } from '../../../repositories/IJobsRepository'
-import { IUpdatedData } from '../../../interface/updated.data'
+import { IJobsRepository } from '../../../repositories/repository.interface'
+import { IUpdatedData } from '../../../interface/updated.data.interface'
 
 @Injectable()
 export class JobsRepository implements IJobsRepository {

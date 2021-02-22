@@ -3,8 +3,8 @@ import { AuthGuard } from '@nestjs/passport'
 import { Response } from 'express';
 import { GetUser } from '../auth/decorators/get-user.decorator'
 import { JobsService } from './jobs.service'
-import { IJobs } from './interface/jobs.interface'
 import { IUser } from '@/modules/users/interfaces/user.interface'
+import { UpdateJobDto } from './dtos/job-update-dto'
 
 @Controller('v3/jobs')
 export class JobsController {
@@ -18,7 +18,7 @@ export class JobsController {
 
   @Put(':id')
   @UseGuards(AuthGuard())
-  async updateJob(@Body() jobData: IJobs, @Param() { id }, @GetUser() user: IUser): Promise<object> {
+  async updateJob(@Body() jobData: UpdateJobDto, @Param() { id }, @GetUser() user: IUser): Promise<object> {
     const job = await this.jobsService.update({ id, data: jobData, user })
 
     return { job }

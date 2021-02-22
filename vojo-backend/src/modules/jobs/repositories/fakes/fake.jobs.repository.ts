@@ -1,9 +1,9 @@
 import { uuid } from 'uuidv4'
-import { IJobsRepository } from '../IJobsRepository'
+import { IJobsRepository } from '../repository.interface'
 import { ISendData } from '../../interface/senddata.interface'
 import { IJobs } from '../../interface/jobs.interface'
 import { CreateJobDto } from '../../dtos/job-create-dto'
-import { IUpdatedData } from '../../interface/updated.data'
+import { IUpdatedData } from '../../interface/updated.data.interface'
 
 export class FakeJobsRepository implements IJobsRepository {
     private jobs: IJobs[] = []
