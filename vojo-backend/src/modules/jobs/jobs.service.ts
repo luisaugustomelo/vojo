@@ -38,8 +38,7 @@ export class JobsService {
     }
 
     async create({ data, user }: ISendData): Promise<IJobs | undefined> {
-        data.updatedBy = user._id
-        data.createdBy = user._id
+        data.updatedBy = data.createdBy = user._id
 
         const job = await this.jobsRepository.create(data as IJobs)
 

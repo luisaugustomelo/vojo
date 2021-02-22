@@ -67,6 +67,8 @@ export class CreateJobDto {
     @IsBoolean()
     readonly isActive?: boolean
 
+    workingHours: string
+
     createdBy?: string
 
     updatedBy?: string

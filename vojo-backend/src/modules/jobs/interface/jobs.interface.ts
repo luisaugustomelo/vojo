@@ -14,6 +14,7 @@ export interface IJobs extends Document {
   location: ILocation
   education: string
   company: string
+  workingHours: string
   createdBy: string
   updatedBy: string
   createdAt: string

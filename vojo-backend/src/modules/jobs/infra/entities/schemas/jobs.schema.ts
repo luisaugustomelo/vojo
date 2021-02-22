@@ -11,6 +11,7 @@ export const JobSchema = new mongoose.Schema({
     location: { type: Object }, 
     education: { type: String },
     company: { type: String },
+    workingHours: { type: String },
     createdBy: { type: String },
     updatedBy: { type: String },
     createdAt: { type: String },

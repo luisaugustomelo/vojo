@@ -1,5 +1,5 @@
 
-import { IsNotEmpty, IsObject, IsString, IsNumber, IsUrl, IsDecimal, IsOptional, IsPositive, IsNotEmptyObject } from 'class-validator'
+import { IsNotEmpty, IsObject, IsString, IsNumber, IsUrl, IsOptional, IsPositive, IsNotEmptyObject } from 'class-validator'
 import { ICompensation } from '../interface/compensation.interface'
 import { ILocation } from '../interface/location.interface'
 
@@ -48,7 +48,6 @@ export class UpdateJobDto {
 
     @IsNotEmpty()
     @IsNumber()
-    @IsDecimal()
     @IsPositive()
     @IsOptional()
     readonly __v?: number
@@ -60,6 +59,10 @@ export class UpdateJobDto {
     @IsUrl()
     readonly imageUrl: string
 
+    @IsNotEmpty()
+    @IsString()
+    workingHours: string
+    
     createdBy ?: string
 
     updatedBy ?: string
