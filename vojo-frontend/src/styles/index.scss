@@ -46,6 +46,12 @@ code {
     opacity: 1;
   }
 
+  &.light {
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff70;
+  }
+
   .modal {
     max-height: 80vh;
     overflow-y: auto;

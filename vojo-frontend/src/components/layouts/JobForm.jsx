@@ -16,12 +16,12 @@ const validationSchema = yup.object({
     location: yup.object({
         city: yup.string().required("Campo obrigatório"),
         state: yup.string().required("Campo obrigatório"),
-        country: yup.string().required("Campo obrigatório")
+        country: yup.string().required("Campo obrigatório"),
     }),
     compensation: yup.object({
         amount: yup.string().required("Campo obrigatório"),
         currency: yup.string().required("Campo obrigatório"),
-        recurrency: yup.string().required("Campo obrigatório")
+        recurrency: yup.string().required("Campo obrigatório"),
     }),
 });
 
@@ -38,7 +38,7 @@ const fields = {
     location: {
         city: "",
         state: "",
-        country: ""
+        country: "",
     },
     compensation: {
         amount: "",
@@ -60,7 +60,7 @@ const populateFields = (values) => {
     });
 
     return result;
-}
+};
 
 const JobForm = ({ data, onSubmit }) => {
     const initialValues = populateFields(data);
@@ -157,7 +157,9 @@ const JobForm = ({ data, onSubmit }) => {
                             name="workingHours"
                             value={values.workingHours}
                             onInputBlur={({ value }) => setFieldValue("workingHours", value)}
-                            onInputChange={({ value }) => setFieldValue("workingHours", value)}
+                            onInputChange={({ value }) =>
+                                setFieldValue("workingHours", value)
+                            }
                             placeholder="Carga horária"
                             errorMessage={errors.workingHours}
                             showError={!!errors.workingHours}
@@ -197,7 +199,9 @@ const JobForm = ({ data, onSubmit }) => {
                             name="location.city"
                             value={values.location?.city}
                             onInputBlur={({ value }) => setFieldValue("location.city", value)}
-                            onInputChange={({ value }) => setFieldValue("location.city", value)}
+                            onInputChange={({ value }) =>
+                                setFieldValue("location.city", value)
+                            }
                             placeholder="Cidade"
                             errorMessage={errors.location?.city}
                             showError={!!errors.location?.city}
@@ -208,8 +212,12 @@ const JobForm = ({ data, onSubmit }) => {
                             label="Estado"
                             name="location.state"
                             value={values.location?.state}
-                            onInputBlur={({ value }) => setFieldValue("location.state", value)}
-                            onInputChange={({ value }) => setFieldValue("location.state", value)}
+                            onInputBlur={({ value }) =>
+                                setFieldValue("location.state", value)
+                            }
+                            onInputChange={({ value }) =>
+                                setFieldValue("location.state", value)
+                            }
                             placeholder="Estado"
                             errorMessage={errors.location?.state}
                             showError={!!errors.location?.state}
@@ -220,8 +228,12 @@ const JobForm = ({ data, onSubmit }) => {
                             label="País"
                             name="location.country"
                             value={values.location?.country}
-                            onInputBlur={({ value }) => setFieldValue("location.country", value)}
-                            onInputChange={({ value }) => setFieldValue("location.country", value)}
+                            onInputBlur={({ value }) =>
+                                setFieldValue("location.country", value)
+                            }
+                            onInputChange={({ value }) =>
+                                setFieldValue("location.country", value)
+                            }
                             placeholder="País"
                             errorMessage={errors.location?.country}
                             showError={!!errors.location?.country}
@@ -235,11 +247,16 @@ const JobForm = ({ data, onSubmit }) => {
                             label="Valor"
                             name="compensation.amount"
                             value={values.compensation?.amount}
-                            onInputBlur={({ value }) => setFieldValue("compensation.amount", value)}
-                            onInputChange={({ value }) => setFieldValue("compensation.amount", value)}
+                            onInputBlur={({ value }) =>
+                                setFieldValue("compensation.amount", value)
+                            }
+                            onInputChange={({ value }) =>
+                                setFieldValue("compensation.amount", value)
+                            }
                             placeholder="Valor"
                             errorMessage={errors.compensation?.amount}
                             showError={!!errors.compensation?.amount}
+                            type="number"
                         />
 
                         <TextInput
@@ -247,8 +264,12 @@ const JobForm = ({ data, onSubmit }) => {
                             label="Moeda"
                             name="compensation.currency"
                             value={values.compensation?.currency}
-                            onInputBlur={({ value }) => setFieldValue("compensation.currency", value)}
-                            onInputChange={({ value }) => setFieldValue("compensation.currency", value)}
+                            onInputBlur={({ value }) =>
+                                setFieldValue("compensation.currency", value)
+                            }
+                            onInputChange={({ value }) =>
+                                setFieldValue("compensation.currency", value)
+                            }
                             placeholder="Moeda"
                             errorMessage={errors.compensation?.currency}
                             showError={!!errors.compensation?.currency}
@@ -259,16 +280,18 @@ const JobForm = ({ data, onSubmit }) => {
                             label="Recorrência"
                             name="compensation.recurrency"
                             value={values.compensation?.recurrency}
-                            onInputBlur={({ value }) => setFieldValue("compensation.recurrency", value)}
-                            onInputChange={({ value }) => setFieldValue("compensation.recurrency", value)}
+                            onInputBlur={({ value }) =>
+                                setFieldValue("compensation.recurrency", value)
+                            }
+                            onInputChange={({ value }) =>
+                                setFieldValue("compensation.recurrency", value)
+                            }
                             placeholder="Recorrência"
                             errorMessage={errors.compensation?.recurrency}
                             showError={!!errors.compensation?.recurrency}
                         />
                     </div>
-                    <Button onButtonClick={handleSubmit}>
-                        Atualizar vaga
-                    </Button>
+                    <Button onButtonClick={handleSubmit}>Atualizar vaga</Button>
                 </>
             )}
         </Formik>

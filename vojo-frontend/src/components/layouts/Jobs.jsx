@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Typography, Button, themes } from "@mindlab-vojo/component-library";
 
 import { AuthContext } from "../../contexts/AuthContext";
+import { LoaderContext } from "../../contexts/LoaderContext";
 import { ModalContext } from "../../contexts/ModalContext";
 
 import { Card } from "../elements";
@@ -14,11 +16,14 @@ const Jobs = () => {
 
     const { authData } = useContext(AuthContext);
     const { setShow } = useContext(ModalContext);
+    const { setIsLoading } = useContext(LoaderContext);
 
     const history = useHistory();
 
     useEffect(() => {
         const fetchJobs = async () => {
+            setIsLoading(true);
+
             try {
                 const response = await fetch(`${process.env.REACT_APP_API}/v3/jobs`);
 
@@ -26,7 +31,9 @@ const Jobs = () => {
 
                 setJobs(data);
             } catch (error) {
-                console.error(error);
+                toast.error("Não foi possível carregar as vagas no momento.");
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -43,7 +50,7 @@ const Jobs = () => {
             history.push({
                 pathname: "/login",
                 search: `?action=edit&subject=${selectedJob._id}`,
-                state: selectedJob
+                state: selectedJob,
             });
         } else {
             history.push(`/edit/${selectedJob._id}`, selectedJob);
@@ -111,7 +118,10 @@ const Jobs = () => {
                             >
                                 {selectedJob.compensation.amount ? (
                                     <>
-                                        {`${selectedJob.compensation.currency} ${selectedJob.compensation.amount}`}
+                                        {`${selectedJob.compensation.currency
+                                            } ${new Intl.NumberFormat().format(
+                                                selectedJob.compensation.amount
+                                            )}`}
                                     </>
                                 ) : (
                                         <>A combinar</>

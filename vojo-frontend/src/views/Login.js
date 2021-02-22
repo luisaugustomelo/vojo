@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   Button,
   Container,
@@ -19,6 +20,7 @@ import { defaultInputState } from '../utils/formDefaultStates'
 import stateKeysToArray from '../utils/stateKeysToArray'
 
 import { AuthContext } from '../contexts/AuthContext';
+import { LoaderContext } from '../contexts/LoaderContext';
 
 class Login extends Component {
   state = {
@@ -98,7 +100,7 @@ class Login extends Component {
     }
   }
 
-  handleLoginClick = async (authContext) => {
+  handleLoginClick = async (authContext, loaderContext) => {
     const fieldKeys = stateKeysToArray(this.state.fields)
 
     await this.checkIsFieldsValid(fieldKeys)
@@ -106,7 +108,7 @@ class Login extends Component {
 
     if (this.state.isFieldsValid) {
       const requestData = this.createRequestObject()
-      await this.loginSet(requestData, authContext)
+      await this.loginSet(requestData, authContext, loaderContext)
     }
   }
 
@@ -135,11 +137,13 @@ class Login extends Component {
     }
   }
 
-  loginSet = async (data, { setAuthData }) => {
+  loginSet = async (data, { setAuthData }, { setIsLoading }) => {
     const urlParams = new URLSearchParams(window.location.search);
 
     const action = urlParams.get('action');
     const subject = urlParams.get('subject');
+
+    setIsLoading(true);
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API}/v3/auth/login`, {
@@ -151,6 +155,8 @@ class Login extends Component {
       });
 
       const accessToken = response.headers.get("Vojo-Authorization");
+
+      sessionStorage.setItem("accessToken", accessToken);
 
       const newState = {
         loginData: {
@@ -166,12 +172,14 @@ class Login extends Component {
       }));
 
       if (action && ['edit'].includes(action)) {
-        this.props.history.push(`${action}/${subject}`, this.props.location.state);
+        this.props.history.replace(`${action}/${subject}`, this.props.location.state);
       } else {
         this.props.history.replace('/');
       }
     } catch (error) {
-      console.error(error);
+      toast.error("Não foi possível realizar a requisição.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -179,106 +187,109 @@ class Login extends Component {
     return (
       <AuthContext.Consumer>
         {(authContext) => (
-
-          <Container maxWidth="full">
-            <Container maxWidth="full">
-              <Header />
-              {
-                this.state.loginData.error && (
-                  <div style={{
-                    display: 'block',
-                    width: '100%',
-                    zIndex: '100'
-                  }}>
-                    <StickyToast show>
-                      <Typography
-                        color={themes.vojo.colors.redColor}
-                        tag="span"
-                        type="default">
-                        {this.state.loginData.error.message}
-                      </Typography>
-                    </StickyToast>
-                  </div>
-                )
-              }
-            </Container>
-            <Container maxWidth="mobile">
-              <div className="Login__Container">
-                <div className="Login__Text__Title">
-                  <Typography tag="h1" type="title" color={themes.vojo.colors.primaryColor}>
-                    <strong>
-                      Entre no VOJO
-                </strong>
-                  </Typography>
-                </div>
-                <div className="Login__Forms">
-                  <div className="Login__Forms__Input">
-                    <EmailInput
-                      errorMessage={this.state.fields.username.errorMessage}
-                      id="username"
-                      isRequired
-                      label="E-mail"
-                      name="username"
-                      onInputBlur={(state) => this.handleFieldUpdate('username', state)}
-                      onInputChange={(state) => this.handleFieldUpdate('username', state)}
-                      placeholder="E-mail"
-                      showError={this.state.fields.username.showError}
-                      type="text"
-                    />
-                  </div>
-                  <div className="Login__Forms__Input">
-                    <PasswordInput
-                      errorMessage={this.state.fields.password.errorMessage}
-                      id="password"
-                      isRequired
-                      label="Senha"
-                      name="password"
-                      onInputBlur={(state) => this.handleFieldUpdate('password', state)}
-                      onInputChange={(state) => this.handleFieldUpdate('password', state)}
-                      placeholder="Senha"
-                      showError={this.state.fields.password.showError}
-                      type="text"
-                      isPassword
-                    />
-                  </div>
-                  <div className="Login__Text__ForgotPassword">
-                    <Link to="/">
-                      <Typography
-                        isUnderlined
-                        tag="h1"
-                        type="default"
-                        color={themes.vojo.colors.primaryColor}
-                      >
-                        <strong>
-                          Esqueceu sua senha?
-                    </strong>
-                      </Typography>
-                    </Link>
-                  </div>
+          <LoaderContext.Consumer>
+            {(loaderContext) => (
+              <Container maxWidth="full">
+                <Container maxWidth="full">
+                  <Header />
                   {
-                    this.state.loginData.isLoading ? (
-                      <Spinner />
-                    ) : (
-                        <div className="Login__Forms__Button">
-                          <div className="Login__Forms__Button__Wrapper">
-                            <Button
-                              id="submit-login"
-                              name="submit-login"
-                              onButtonClick={() => this.handleLoginClick(authContext)}
-                              type="submit">
-                              Continuar
-                    </Button>
-                          </div>
-                        </div>
-                      )
+                    this.state.loginData.error && (
+                      <div style={{
+                        display: 'block',
+                        width: '100%',
+                        zIndex: '100'
+                      }}>
+                        <StickyToast show>
+                          <Typography
+                            color={themes.vojo.colors.redColor}
+                            tag="span"
+                            type="default">
+                            {this.state.loginData.error.message}
+                          </Typography>
+                        </StickyToast>
+                      </div>
+                    )
                   }
-                </div>
-              </div>
-            </Container>
-            <Container maxWidth="full">
-              <Footer />
-            </Container>
-          </Container>
+                </Container>
+                <Container maxWidth="mobile">
+                  <div className="Login__Container">
+                    <div className="Login__Text__Title">
+                      <Typography tag="h1" type="title" color={themes.vojo.colors.primaryColor}>
+                        <strong>
+                          Entre no VOJO
+                </strong>
+                      </Typography>
+                    </div>
+                    <div className="Login__Forms">
+                      <div className="Login__Forms__Input">
+                        <EmailInput
+                          errorMessage={this.state.fields.username.errorMessage}
+                          id="username"
+                          isRequired
+                          label="E-mail"
+                          name="username"
+                          onInputBlur={(state) => this.handleFieldUpdate('username', state)}
+                          onInputChange={(state) => this.handleFieldUpdate('username', state)}
+                          placeholder="E-mail"
+                          showError={this.state.fields.username.showError}
+                          type="text"
+                        />
+                      </div>
+                      <div className="Login__Forms__Input">
+                        <PasswordInput
+                          errorMessage={this.state.fields.password.errorMessage}
+                          id="password"
+                          isRequired
+                          label="Senha"
+                          name="password"
+                          onInputBlur={(state) => this.handleFieldUpdate('password', state)}
+                          onInputChange={(state) => this.handleFieldUpdate('password', state)}
+                          placeholder="Senha"
+                          showError={this.state.fields.password.showError}
+                          type="text"
+                          isPassword
+                        />
+                      </div>
+                      <div className="Login__Text__ForgotPassword">
+                        <Link to="/">
+                          <Typography
+                            isUnderlined
+                            tag="h1"
+                            type="default"
+                            color={themes.vojo.colors.primaryColor}
+                          >
+                            <strong>
+                              Esqueceu sua senha?
+                    </strong>
+                          </Typography>
+                        </Link>
+                      </div>
+                      {
+                        this.state.loginData.isLoading ? (
+                          <Spinner />
+                        ) : (
+                            <div className="Login__Forms__Button">
+                              <div className="Login__Forms__Button__Wrapper">
+                                <Button
+                                  id="submit-login"
+                                  name="submit-login"
+                                  onButtonClick={() => this.handleLoginClick(authContext, loaderContext)}
+                                  type="submit">
+                                  Continuar
+                    </Button>
+                              </div>
+                            </div>
+                          )
+                      }
+                    </div>
+                  </div>
+                </Container>
+                <Container maxWidth="full">
+                  <Footer />
+                </Container>
+              </Container>
+            )}
+          </LoaderContext.Consumer>
         )}
       </AuthContext.Consumer>
     )

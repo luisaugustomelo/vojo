@@ -1,28 +1,27 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useLocation, useHistory } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { Container, Header, Footer, Typography, themes } from "@mindlab-vojo/component-library";
 
 import { JobForm } from '../components/layouts';
 
-import { AuthContext } from '../contexts/AuthContext';
-
 import "../styles/Home.scss";
 
 const EditJob = () => {
-    const { authData } = useContext(AuthContext);
-
     const location = useLocation();
     const history = useHistory();
 
     const data = location.state;
 
     const handleSubmit = async (values) => {
+        const accessToken = sessionStorage.getItem("accessToken");
+
         try {
             const response = await fetch(`${process.env.REACT_APP_API}/v3/jobs/${data._id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${authData.accessToken}`
+                    "Authorization": `Bearer ${accessToken}`
                 },
                 body: JSON.stringify(values),
             });
@@ -31,9 +30,12 @@ const EditJob = () => {
 
             if (!resData.error) {
                 history.push('/');
+                toast.success("Vaga atualizada com sucesso!");
+            } else {
+                toast.error("Não foi possível atualizar a vaga no momento.");
             }
         } catch (error) {
-            console.error(error);
+            toast.error("Não foi possível atualizar a vaga no momento.");
         }
     };
 
